@@ -4,8 +4,6 @@ require 'net/https'
 
 module KontoAPI
 
-  mattr_accessor :api_key
-
   extend self
 
   VALIDITY_URL = Addressable::URI.parse 'https://ask.kontoapi.de/for/validity.json'
@@ -14,13 +12,24 @@ module KontoAPI
     :timeout  => 10
   }
 
+  @@api_key = nil
+
+  def api_key=(key)
+    @@api_key = key
+  end
+
+  def api_key
+    @@api_key
+  end
 
   def valid?(account_number, bank_code)
-    ask_for(:validity, { :ktn => account_number, :blz => bank_code })
+    response = ask_for(:validity, { :ktn => account_number, :blz => bank_code })
+    response[:answer].eql?('yes')
   end
 
   def bank_name(bank_code)
-    ask_for(:bankname, { :blz => bank_code })
+    response = ask_for(:bankname, { :blz => bank_code })
+    response[:answer]
   end
 
 
@@ -29,7 +38,7 @@ module KontoAPI
 
   def ask_for(what, options={})
     raise 'Please set your API Key first (KontoAPI::api_key = "<your_key>"). You can get one at https://www.kontoapi.de/' unless api_key
-    url = "#{what}_URL".upcase.constantize.dup
+    url = const_get("#{what}_URL".upcase).dup
     options.merge!( :key => api_key )
     url.query_values = options
     body = get_url(url)
@@ -37,7 +46,7 @@ module KontoAPI
   end
 
   def get_url(url)
-    http = Net::HTTP.new(url.host, url.port)
+    http = Net::HTTP.new(url.host, 443)
     http.use_ssl = true
     # TODO include certs and enable SSL verification
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
