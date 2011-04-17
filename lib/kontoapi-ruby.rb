@@ -6,20 +6,24 @@ module KontoAPI
 
   extend self
 
-  VALIDITY_URL = Addressable::URI.parse 'https://ask.kontoapi.de/for/validity.json'
-  BANKNAME_URL = Addressable::URI.parse 'https://ask.kontoapi.de/for/bankname.json'
-  DEFAULT_OPTIONS = {
-    :timeout  => 10
-  }
+  VALIDITY_URL    = Addressable::URI.parse 'https://ask.kontoapi.de/for/validity.json'
+  BANKNAME_URL    = Addressable::URI.parse 'https://ask.kontoapi.de/for/bankname.json'
+  DEFAULT_TIMEOUT = 10
 
   @@api_key = nil
-
   def api_key=(key)
     @@api_key = key
   end
-
   def api_key
     @@api_key
+  end
+
+  @@timeout = nil
+  def timeout=(new_timeout)
+    @@timeout = new_timeout
+  end
+  def timeout
+    @@timeout || DEFAULT_TIMEOUT
   end
 
   def valid?(account_number, bank_code)
@@ -48,6 +52,7 @@ module KontoAPI
   def get_url(url)
     http = Net::HTTP.new(url.host, 443)
     http.use_ssl = true
+    http.read_timeout = timeout
     # TODO include certs and enable SSL verification
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     response = http.get url.request_uri, 'User-agent' => 'Konto API Ruby Client'
