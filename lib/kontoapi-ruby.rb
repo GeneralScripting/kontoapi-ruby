@@ -1,4 +1,5 @@
 require 'addressable/uri'
+require 'yajl/json_gem'
 require 'net/http'
 require 'net/https'
 
@@ -27,13 +28,15 @@ module KontoAPI
   end
 
   def valid?(account_number, bank_code)
-    response = ask_for(:validity, { :ktn => account_number, :blz => bank_code })
-    response[:answer].eql?('yes')
+    return false if account_number.to_s.strip.empty? || bank_code.to_s.strip.empty?
+    response = ask_for(:validity, { :ktn => account_number.to_s, :blz => bank_code.to_s })
+    response['answer'].eql?('yes')
   end
 
   def bank_name(bank_code)
-    response = ask_for(:bankname, { :blz => bank_code })
-    response[:answer]
+    return nil if bank_code.to_s.strip.empty?
+    response = ask_for(:bankname, { :blz => bank_code.to_s })
+    response['answer'].empty? ? nil : response['answer']
   end
 
 
@@ -46,7 +49,7 @@ module KontoAPI
     options.merge!( :key => api_key )
     url.query_values = options
     body = get_url(url)
-    NibblerJSON.parse(body)
+    JSON.parse(body)
   end
 
   def get_url(url)
@@ -56,7 +59,8 @@ module KontoAPI
     # TODO include certs and enable SSL verification
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     response = http.get url.request_uri, 'User-agent' => 'Konto API Ruby Client'
-    if Net::HTTPSuccess == response
+    case response
+    when Net::HTTPSuccess, Net::HTTPOK
       response.body
     else
       response.error!
