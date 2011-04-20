@@ -7,6 +7,7 @@ module KontoAPI
 
   extend self
 
+  RootCA          = '/etc/ssl/certs'
   VALIDITY_URL    = Addressable::URI.parse 'https://ask.kontoapi.de/for/validity.json'
   BANKNAME_URL    = Addressable::URI.parse 'https://ask.kontoapi.de/for/bankname.json'
   DEFAULT_TIMEOUT = 10
@@ -56,8 +57,13 @@ module KontoAPI
     http = Net::HTTP.new(url.host, 443)
     http.use_ssl = true
     http.read_timeout = timeout
-    # TODO include certs and enable SSL verification
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    if File.directory? RootCA
+      http.ca_path = RootCA
+      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+      http.verify_depth = 5
+    else
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    end
     response = http.get url.request_uri, 'User-agent' => 'Konto API Ruby Client'
     case response
     when Net::HTTPSuccess, Net::HTTPOK

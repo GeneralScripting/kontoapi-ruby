@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{kontoapi-ruby}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jan Schwenzien"]
-  s.date = %q{2011-04-18}
+  s.date = %q{2011-04-20}
   s.description = %q{A ruby library to access the Konto API (https://www.kontoapi.de/), a webservice that performs validity checks and other services regarding german bank accounts.}
   s.email = %q{jan@general-scripting.com}
   s.extra_rdoc_files = [
