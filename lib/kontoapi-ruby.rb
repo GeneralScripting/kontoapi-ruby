@@ -28,9 +28,9 @@ module KontoAPI
     @@timeout || DEFAULT_TIMEOUT
   end
 
-  def valid?(account_number, bank_code)
-    return false if account_number.to_s.strip.empty? || bank_code.to_s.strip.empty?
-    response = ask_for(:validity, { :ktn => account_number.to_s, :blz => bank_code.to_s })
+  def valid?(options={})
+    return false  unless (!options[:ktn].to_s.strip.empty? && !options[:blz].to_s.strip.empty?) || !options[:iban].to_s.strip.empty? || !options[:bic].to_s.strip.empty?
+    response = ask_for(:validity, options)
     response['answer'].eql?('yes')
   end
 

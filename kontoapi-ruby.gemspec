@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{kontoapi-ruby}
-  s.version = "0.1.1"
+  s.name = "kontoapi-ruby"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jan Schwenzien"]
-  s.date = %q{2011-04-20}
-  s.description = %q{A ruby library to access the Konto API (https://www.kontoapi.de/), a webservice that performs validity checks and other services regarding german bank accounts.}
-  s.email = %q{jan@general-scripting.com}
+  s.date = "2012-04-08"
+  s.description = "A ruby library to access the Konto API (https://www.kontoapi.de/), a webservice that performs validity checks and other services regarding german and international bank accounts."
+  s.email = "jan@general-scripting.com"
   s.extra_rdoc_files = [
     "LICENSE",
     "README.markdown"
@@ -28,11 +28,11 @@ Gem::Specification.new do |s|
     "spec/kontoapi-ruby_spec.rb",
     "spec/spec_helper.rb"
   ]
-  s.homepage = %q{http://github.com/GeneralScripting/kontoapi-ruby}
+  s.homepage = "http://github.com/GeneralScripting/kontoapi-ruby"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.7.2}
-  s.summary = %q{Konto API Ruby Library}
+  s.rubygems_version = "1.8.15"
+  s.summary = "Konto API Ruby Library"
   s.test_files = [
     "spec/kontoapi-ruby_spec.rb",
     "spec/spec_helper.rb"

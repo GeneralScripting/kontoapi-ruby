@@ -3,36 +3,36 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 describe "KontoAPI" do
 
   it "should raise if no api key was provided" do
-    lambda { KontoAPI::valid?('1234567', '12312312') }.should raise_error(RuntimeError)
+    lambda { KontoAPI::valid?( :ktn => '1234567', :blz => '12312312' ) }.should raise_error(RuntimeError)
   end
 
   it "should raise if api key is invalid" do
     FakeWeb.register_uri(:get, %r|https://ask\.kontoapi\.de/for/validity.json?.*|, :body => '{"error":"unauthenticated"}', :status => ["401", "Unauthorized"])
     KontoAPI::api_key = 'abc123'
-    lambda { KontoAPI::valid?('1234567', '12312312') }.should raise_error(Net::HTTPServerException)
+    lambda { KontoAPI::valid?( :ktn => '1234567', :blz => '12312312' ) }.should raise_error(Net::HTTPServerException)
   end
 
   context "checking validity" do
 
     it "should return false if account number or bank code are empty" do
-      KontoAPI::valid?(nil, nil).should be_false
-      KontoAPI::valid?('123', nil).should be_false
-      KontoAPI::valid?(nil, '123').should be_false
-      KontoAPI::valid?('', '').should be_false
-      KontoAPI::valid?('123', '').should be_false
-      KontoAPI::valid?('', '123').should be_false
+      KontoAPI::valid?( :ktn => nil, :blz => nil ).should be_false
+      KontoAPI::valid?( :ktn => '123', :blz => nil ).should be_false
+      KontoAPI::valid?( :ktn => nil, :blz => '123' ).should be_false
+      KontoAPI::valid?( :ktn => '', :blz => '' ).should be_false
+      KontoAPI::valid?( :ktn => '123', :blz => '' ).should be_false
+      KontoAPI::valid?( :ktn => '', :blz => '123' ).should be_false
     end
 
     it "should return true for successfull validity checks" do
       FakeWeb.register_uri(:get, %r|https://ask\.kontoapi\.de/for/validity.json?.*|, :body => '{"answer":"yes"}')
       KontoAPI::api_key = 'abc123'
-      KontoAPI::valid?('correct_account_number', '12312312').should be_true
+      KontoAPI::valid?( :ktn => 'correct_account_number', :blz => '12312312' ).should be_true
     end
 
     it "should return false for unsuccessfull validity checks" do
       FakeWeb.register_uri(:get, %r|https://ask\.kontoapi\.de/for/validity.json?.*|, :body => '{"answer":"no"}')
       KontoAPI::api_key = 'abc123'
-      KontoAPI::valid?('incorrect_account_number', '12312312').should be_false
+      KontoAPI::valid?( :ktn => 'incorrect_account_number', :blz => '12312312' ).should be_false
     end
 
   end
