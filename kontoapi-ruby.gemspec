@@ -38,34 +38,14 @@ Gem::Specification.new do |s|
     "spec/spec_helper.rb"
   ]
 
-  if s.respond_to? :specification_version then
-    s.specification_version = 3
+  
+  s.add_runtime_dependency 'addressable'
+  s.add_runtime_dependency 'json'
+  
+  s.add_development_dependency 'bundler'
+  s.add_development_dependency 'rake'
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'fakeweb'
 
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<addressable>, [">= 0"])
-      s.add_runtime_dependency(%q<yajl-ruby>, [">= 0"])
-      s.add_development_dependency(%q<rspec>, ["~> 2.3.0"])
-      s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_development_dependency(%q<jeweler>, ["~> 1.5.2"])
-      s.add_development_dependency(%q<rcov>, [">= 0"])
-      s.add_development_dependency(%q<fakeweb>, [">= 0"])
-    else
-      s.add_dependency(%q<addressable>, [">= 0"])
-      s.add_dependency(%q<yajl-ruby>, [">= 0"])
-      s.add_dependency(%q<rspec>, ["~> 2.3.0"])
-      s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
-      s.add_dependency(%q<rcov>, [">= 0"])
-      s.add_dependency(%q<fakeweb>, [">= 0"])
-    end
-  else
-    s.add_dependency(%q<addressable>, [">= 0"])
-    s.add_dependency(%q<yajl-ruby>, [">= 0"])
-    s.add_dependency(%q<rspec>, ["~> 2.3.0"])
-    s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-    s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
-    s.add_dependency(%q<rcov>, [">= 0"])
-    s.add_dependency(%q<fakeweb>, [">= 0"])
-  end
 end
 

@@ -1,6 +1,9 @@
 Konto API Ruby Library
 ======================
 
+
+[![Build Status](https://travis-ci.org/jwaterfaucett/kontoapi-ruby.png)](https://travis-ci.org/jwaterfaucett/kontoapi-ruby.png)
+
 This library provides an easy way to access the [Konto API](https://www.kontoapi.de/), a webservice that performs validity checks and other services regarding german and international bank accounts.
 
 INSTALLATION
