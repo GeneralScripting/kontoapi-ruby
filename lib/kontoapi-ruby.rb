@@ -1,5 +1,5 @@
 require 'addressable/uri'
-require 'yajl/json_gem'
+require 'json'
 require 'net/http'
 require 'net/https'
 

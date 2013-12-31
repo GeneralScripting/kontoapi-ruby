@@ -40,7 +40,7 @@ Gem::Specification.new do |s|
 
   
   s.add_runtime_dependency 'addressable'
-  s.add_runtime_dependency 'yajl-ruby'
+  s.add_runtime_dependency 'json'
   
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'rake'
