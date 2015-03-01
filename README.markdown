@@ -44,4 +44,4 @@ USAGE
 Copyright
 ---------
 
-Copyright (c) 2011 General Scripting - Jan Schwenzien. See LICENSE for details.
+Copyright (c) 2011-2015 General Scripting UG (haftungsbeschränkt). See LICENSE for details.
