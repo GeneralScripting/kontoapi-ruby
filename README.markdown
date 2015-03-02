@@ -41,6 +41,10 @@ USAGE
     KontoAPI::bank_name('10010010')
     #=> 'Postbank'
 
+    # Get IBAN + BIC from account data: KontoAPI::iban_and_bic(ktn, blz)
+    KontoAPI::iban_and_bic('68118106', '10010010')
+    #=> { 'iban' => 'DE71100100100068118106', 'bic' => 'PBNKDEFF100' }
+
 Copyright
 ---------
 

@@ -15,24 +15,24 @@ describe "KontoAPI" do
   context "checking validity" do
 
     it "should return false if account number or bank code are empty" do
-      KontoAPI::valid?( :ktn => nil, :blz => nil ).should be_false
-      KontoAPI::valid?( :ktn => '123', :blz => nil ).should be_false
-      KontoAPI::valid?( :ktn => nil, :blz => '123' ).should be_false
-      KontoAPI::valid?( :ktn => '', :blz => '' ).should be_false
-      KontoAPI::valid?( :ktn => '123', :blz => '' ).should be_false
-      KontoAPI::valid?( :ktn => '', :blz => '123' ).should be_false
+      KontoAPI::valid?( :ktn => nil, :blz => nil ).should be false
+      KontoAPI::valid?( :ktn => '123', :blz => nil ).should be false
+      KontoAPI::valid?( :ktn => nil, :blz => '123' ).should be false
+      KontoAPI::valid?( :ktn => '', :blz => '' ).should be false
+      KontoAPI::valid?( :ktn => '123', :blz => '' ).should be false
+      KontoAPI::valid?( :ktn => '', :blz => '123' ).should be false
     end
 
     it "should return true for successfull validity checks" do
       FakeWeb.register_uri(:get, %r|https://ask\.kontoapi\.de/for/validity.json?.*|, :body => '{"answer":"yes"}')
       KontoAPI::api_key = 'abc123'
-      KontoAPI::valid?( :ktn => 'correct_account_number', :blz => '12312312' ).should be_true
+      KontoAPI::valid?( :ktn => 'correct_account_number', :blz => '12312312' ).should be true
     end
 
     it "should return false for unsuccessfull validity checks" do
       FakeWeb.register_uri(:get, %r|https://ask\.kontoapi\.de/for/validity.json?.*|, :body => '{"answer":"no"}')
       KontoAPI::api_key = 'abc123'
-      KontoAPI::valid?( :ktn => 'incorrect_account_number', :blz => '12312312' ).should be_false
+      KontoAPI::valid?( :ktn => 'incorrect_account_number', :blz => '12312312' ).should be false
     end
 
   end
