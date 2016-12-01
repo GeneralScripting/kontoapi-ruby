@@ -1,5 +1,5 @@
 require 'addressable/uri'
-require 'yajl/json_gem'
+require 'yajl'
 require 'net/http'
 require 'net/https'
 
@@ -60,7 +60,8 @@ module KontoAPI
     options.merge!( :key => api_key )
     url.query_values = options
     body = get_url(url)
-    JSON.parse(body)
+    parser = Yajl::Parser.new
+    parser.parse(body)
   end
 
   def get_url(url)
